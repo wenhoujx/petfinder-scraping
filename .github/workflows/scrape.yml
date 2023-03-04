@@ -6,10 +6,6 @@ on:
   schedule:
     - cron: "* * * * *"
 
-env:
-  PETFINDER_API: ${{ secrets.PETFINDER_API }}
-  PETFINDER_API_SECRET: ${{ secrets.PETFINDER_API }}
-
 jobs:
   scheduled:
     runs-on: ubuntu-latest
@@ -21,6 +17,9 @@ jobs:
           python-version: "3.9"
       - run: pip install -r ./requirements.txt
       - run: python scrape.py
+        env:
+          PETFINDER_API: ${{ secrets.PETFINDER_API }}
+          PETFINDER_API_SECRET: ${{ secrets.PETFINDER_API_SECRET }}      
       - name: Commit and push if it changed
         run: |-
           git config user.name "Automated"
